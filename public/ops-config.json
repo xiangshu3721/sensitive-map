@@ -1,11 +1,11 @@
 {
   "_comment": "运营配置。预约开放需同时满足：bookingOpen 为 true、qrImageUrl 为真实二维码地址、receptionIdentity 只能是「如一老师本人微信」或「如一老师预约助理微信」。缺任何一项都显示「预约入口暂未开放」，不使用占位二维码。",
-  "bookingOpen": false,
-  "qrImageUrl": "",
-  "receptionIdentity": "",
-  "headline": "想和如一老师一起看懂这张心力地图？",
-  "body": "分数可以提示方向，你的经历还需要放进真实生活里理解。扫码添加预约微信，发送「心力地图」，预约1v1深度解读。",
-  "bookingMessage": "老师好，我想预约心力地图的1v1深度解读。",
+  "bookingOpen": true,
+  "qrImageUrl": "qr-ryu.png",
+  "receptionIdentity": "如一老师本人微信",
+  "headline": "想更深入地了解自己？添加如一老师微信。",
+  "body": "备注「心力地图」，预约1v1深度解读服务。一起看清你的模式，帮助自我突破和升级，逐步告别高敏感带来的困扰。",
+  "bookingMessage": "老师好，我想预约心力地图1v1深度解读服务，备注：心力地图。",
   "service": {
     "form": "",
     "duration": "",

@@ -43,7 +43,7 @@ export function App() {
 
   useEffect(() => {
     let ignore = false;
-    fetch("/ops-config.json")
+    fetch(`${import.meta.env.BASE_URL}ops-config.json`)
       .then((response) => (response.ok ? response.json() : null))
       .then((data) => {
         if (!ignore) setBooking(resolveBooking(data));

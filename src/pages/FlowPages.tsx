@@ -457,7 +457,7 @@ export function PrivacyPage() {
       <p>
         你的答案、影响评分、情境选择和自述，都保存在这台设备上。查看结果和保存图片都不需要加微信，原始答案也不会自动发送。
       </p>
-      <p>是否保存图片、是否留下联系意向，由你分别决定。联系意向只保存在本机，也不会附上答题内容。</p>
+      <p>是否保存图片、是否添加如一老师微信，由你自己决定。添加微信时不会自动附上答题内容。</p>
       <ul className="meta-list">
         <li>题库版本 {session.report?.questionBankVersion ?? QUESTION_BANK_VERSION}</li>
         <li>规则版本 {session.report?.ruleVersion ?? RULE_VERSION}</li>

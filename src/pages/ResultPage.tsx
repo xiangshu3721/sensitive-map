@@ -161,8 +161,9 @@ export function ResultPage() {
             <p>{booking.headline}</p>
             <p>{booking.body}</p>
             <div className="qr-block">
-              <img src={booking.qrImageUrl} alt="预约二维码" />
+              <img src={booking.qrImageUrl} alt="如一老师微信二维码" />
               <p>{booking.receptionIdentity}</p>
+              <p><strong>添加时请备注：心力地图</strong></p>
             </div>
             {booking.serviceLines.length > 0 && (
               <ul className="meta-list">
@@ -173,31 +174,15 @@ export function ResultPage() {
                 ))}
               </ul>
             )}
-            <label className="check">
-              <input
-                type="checkbox"
-                checked={Boolean(session.consent.contact?.agreed)}
-                onChange={(event) =>
-                  patch((item) => ({
-                    ...item,
-                    consent: {
-                      ...item.consent,
-                      contact: { agreed: event.target.checked, at: new Date().toISOString() },
-                    },
-                  }))
-                }
-              />
-              <span>我希望之后被联系。这只记在本机，不会提交答题和自述。</span>
-            </label>
             <button
               type="button"
               className="btn ghost"
               onClick={async () => setCopyStatus(await copyMessage(booking.bookingMessage))}
             >
-              复制预约消息
+              复制添加说明
             </button>
             {copyStatus && <p className="meta" role="status">{copyStatus}</p>}
-            <p className="meta">复制的内容只有预约意向，不含题目、分数和自述。不加微信也可以看完结果、保存图片。</p>
+            <p className="meta">二维码和添加说明只用于联系，不会自动发送你的答题、分数或自述。</p>
           </>
         ) : (
           <p className="quiet-box">预约入口暂未开放。这里不会放置占位二维码。看结果和保存图片都不需要加微信。</p>
