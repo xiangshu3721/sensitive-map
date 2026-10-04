@@ -9,7 +9,7 @@ import { sheetToPng } from "./sheetImage";
 
 type KitItem = { id: string; t: number; k?: string; nick?: string; d?: unknown };
 type Kit = {
-  configure: (o: { id: string; title: string; exporter?: (rec: KitItem) => unknown }) => void;
+  configure: (o: { id: string; title: string; start?: unknown; exporter?: (rec: KitItem) => unknown }) => void;
   save: (s: unknown, o?: { key?: string; data?: unknown }) => { ok: boolean };
   list: () => KitItem[];
   showHistory: () => void;
@@ -26,7 +26,12 @@ export function kit(): Kit | undefined {
 }
 
 export function setupKit() {
-  kit()?.configure({ id: "sensmap", title: PRODUCT_NAME, exporter: exportFromRecord });
+  kit()?.configure({
+    id: "sensmap",
+    title: PRODUCT_NAME,
+    start: [{ sel: "button", text: "^\\s*(开始测评|继续测评)\\s*$" }],
+    exporter: exportFromRecord,
+  });
 }
 
 const CLOSED_BOOKING = { available: false } as unknown as BookingView;
