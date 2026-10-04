@@ -6,6 +6,7 @@ import { DimensionBlock } from "../components/DimensionBlock";
 import { RadarChart } from "../components/Radar";
 import { applyTopicOverride, buildReport, defaultExpandedDim, RESULT_SECTION_ORDER } from "../logic/report";
 import type { DimId, SubId } from "../model";
+import { kit, saveReport, useHistoryCount } from "../lib/records";
 import { useSession } from "../session/context";
 
 export function ResultPage() {
@@ -14,6 +15,13 @@ export function ResultPage() {
   const [open, setOpen] = useState<DimId[]>(report ? [defaultExpandedDim(report)] : []);
   const [switching, setSwitching] = useState(false);
   const [copyStatus, setCopyStatus] = useState("");
+  const [saved, setSaved] = useState<boolean | null>(null);
+  const count = useHistoryCount();
+
+  useEffect(() => {
+    if (!report) return;
+    setSaved(saveReport(report));
+  }, [report?.id, report?.createdAt]);
 
   useEffect(() => {
     if (report) setOpen([defaultExpandedDim(report)]);
@@ -197,11 +205,18 @@ export function ResultPage() {
             className="btn"
             onClick={() => patch((item) => ({ ...item, step: "preview" }))}
           >
-            保存成图片
+            导出图片
+          </button>
+          <button type="button" className="btn ghost" onClick={() => kit()?.showHistory()}>
+            历史记录{count ? `（${count}）` : ""}
           </button>
           <button type="button" className="btn ghost" onClick={retest}>
             重新测试
           </button>
+          {saved === true && <p className="meta" role="status">这次结果已保存在这台设备（不上传），可在「历史记录」里再看。</p>}
+          {saved === false && (
+            <p className="meta" role="status">这次结果没能存进浏览器（可能是无痕模式或空间已满），仍可导出图片保存。</p>
+          )}
         </div>
       </section>
     ),

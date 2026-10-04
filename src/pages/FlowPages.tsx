@@ -7,6 +7,7 @@ import { pickScenarios } from "../logic/select";
 import type { Answer, ChoiceId, QuestionId, Session, Step } from "../model";
 import { useSession } from "../session/context";
 import { hasProgress } from "../session/store";
+import { kit, useHistoryCount } from "../lib/records";
 
 function Shell({
   kicker,
@@ -64,6 +65,7 @@ function resumeTarget(session: Session): Step {
 
 export function HomePage() {
   const { session, patch, retest } = useSession();
+  const count = useHistoryCount();
   const resume = hasProgress(session);
   const finished = Boolean(session.report);
   const saved = new Date(session.updatedAt);
@@ -126,6 +128,11 @@ export function HomePage() {
             </button>
             <p className="home-action-note">约 8 到 10 分钟完成<br />答案只保存在这台设备上</p>
           </>
+        )}
+        {count > 0 && (
+          <button type="button" className="btn ghost" onClick={() => kit()?.showHistory()}>
+            历史记录（{count}）
+          </button>
         )}
       </div>
     </section>
