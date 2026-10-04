@@ -409,6 +409,7 @@ button:focus-visible, textarea:focus-visible {
 .sheet h3 { font-size: 30px; }
 .sheet p, .sheet li { font-size: 28px; line-height: 1.55; }
 .sheet-summary { font-size: 32px; }
+.sheet .sheet-nick { font-size: 32px; font-weight: 700; margin: 8px 0 20px; }
 .sheet-caption, .sheet-boundary, .sheet-foot { color: var(--muted); }
 .sheet .radar-layout.large {
   width: 920px;
@@ -417,7 +418,8 @@ button:focus-visible, textarea:focus-visible {
 }
 .sheet .radar-label span { font-size: 28px; }
 .sheet .radar-label strong { font-size: 42px; }
-.sheet .dim-static { display: flex; justify-content: space-between; align-items: baseline; }
+.sheet .dim-static { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; }
+.sheet .dim-static .dim-sum { flex-basis: 100%; font-size: 24px; margin-top: 4px; }
 .sheet .dim-static strong { font-size: 36px; }
 .sheet .sub-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
 .sheet-qr img { width: 280px; height: 280px; }

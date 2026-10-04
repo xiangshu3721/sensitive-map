@@ -1,8 +1,8 @@
-import { toPng } from "html-to-image";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { ExportSheet } from "../components/ExportSheet";
 import { useSession } from "../session/context";
+import { sheetToPng } from "../lib/sheetImage";
 
 type Shot = { title: string; url: string };
 
@@ -48,7 +48,7 @@ export function PreviewPage() {
       if (!full) throw new Error("图片还没有准备好。");
       setShot({
         title: variant === "private" ? "完整版本" : "分享版本",
-        url: await capture(full),
+        url: await sheetToPng(full),
       });
     } catch {
       setError("图片还没生成成功。你的结果没有受影响，可以再试一次。");
@@ -127,22 +127,10 @@ export function PreviewPage() {
       {armed &&
         createPortal(
           <div className="export-stage" aria-hidden="true">
-            <ExportSheet report={report} variant={variant} part="full" booking={booking} includeQr={includeQr} />
+            <ExportSheet report={report} variant={variant} part="full" booking={booking} includeQr={includeQr} nick={session.nick ?? ""} />
           </div>,
           document.body,
         )}
     </section>
   );
-}
-
-async function capture(node: HTMLElement): Promise<string> {
-  const height = node.scrollHeight;
-  const pixelRatio = height > 7000 ? 1 : Math.min(2, window.devicePixelRatio || 1);
-  return toPng(node, {
-    width: 1080,
-    height,
-    pixelRatio,
-    cacheBust: true,
-    backgroundColor: "#f6f1ea",
-  });
 }
