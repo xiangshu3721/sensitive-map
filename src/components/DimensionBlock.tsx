@@ -52,6 +52,7 @@ export function DimensionBlock({
           <span>
             {dimension.score ?? "暂无分数"} {dimension.band ?? ""}
           </span>
+          <small className="dim-sum">{dimension.summaryLine}</small>
         </header>
       ) : (
         <button type="button" className="dim-toggle" onClick={onToggle} aria-expanded={open}>

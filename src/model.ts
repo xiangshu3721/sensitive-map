@@ -251,6 +251,7 @@ export type Session = {
   startedAt: string;
   updatedAt: string;
   step: Step;
+  nick?: string;
   quizPage: number;
   consent: ConsentRecord;
   answers: Partial<Record<QuestionId, Answer>>;

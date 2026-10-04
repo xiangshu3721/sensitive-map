@@ -43,6 +43,13 @@ function Shell({
   );
 }
 
+/** 开始/继续前先确认昵称（没有 kit 时直接放行，作答页里还有一道兜底）。 */
+function gated(go: () => void) {
+  const k = kit();
+  if (k) k.ensureNick(go);
+  else go();
+}
+
 function resumeTarget(session: Session): Step {
   if (session.returnStep && session.returnStep !== "home" && session.returnStep !== "privacy") {
     return session.returnStep;
@@ -114,7 +121,7 @@ export function HomePage() {
         ) : resume ? (
           <div className="home-status">
             <p>你有一份还没完成的自我观察{savedLabel ? `，保存于 ${savedLabel}` : ""}。</p>
-            <button type="button" className="btn" onClick={() => patch((item) => ({ ...item, step: resumeTarget(item) }))}>
+            <button type="button" className="btn" onClick={() => gated(() => patch((item) => ({ ...item, step: resumeTarget(item) })))}>
               继续测评
             </button>
             <button type="button" className="btn ghost" onClick={retest}>
@@ -123,7 +130,7 @@ export function HomePage() {
           </div>
         ) : (
           <>
-            <button type="button" className="btn home-primary" onClick={() => patch((item) => ({ ...item, step: "quiz" }))}>
+            <button type="button" className="btn home-primary" onClick={() => gated(() => patch((item) => ({ ...item, step: "quiz" })))}>
               开始测评
             </button>
             <p className="home-action-note">约 8 到 10 分钟完成<br />答案只保存在这台设备上</p>
