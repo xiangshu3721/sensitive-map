@@ -37,7 +37,6 @@ export const RESULT_SECTION_ORDER = [
   "dimensions",
   "patterns",
   "topic",
-  "booking",
   "export",
   "privacy",
 ] as const;

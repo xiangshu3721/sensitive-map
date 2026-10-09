@@ -10,11 +10,10 @@ import { kit, saveReport, useHistoryCount } from "../lib/records";
 import { useSession } from "../session/context";
 
 export function ResultPage() {
-  const { session, patch, booking, retest } = useSession();
+  const { session, patch, retest } = useSession();
   const report = session.report;
   const [open, setOpen] = useState<DimId[]>(report ? [defaultExpandedDim(report)] : []);
   const [switching, setSwitching] = useState(false);
-  const [copyStatus, setCopyStatus] = useState("");
   const [saved, setSaved] = useState<boolean | null>(null);
   const count = useHistoryCount();
 
@@ -161,42 +160,6 @@ export function ResultPage() {
         )}
       </section>
     ),
-    booking: (
-      <section data-section="booking" key="booking">
-        <h2>预约如一老师</h2>
-        {booking.available ? (
-          <>
-            <p>{booking.headline}</p>
-            <p>{booking.body}</p>
-            <div className="qr-block">
-              <img src={booking.qrImageUrl} alt="如一老师微信二维码" />
-              <p>{booking.receptionIdentity}</p>
-              <p><strong>添加时请备注：心力地图</strong></p>
-            </div>
-            {booking.serviceLines.length > 0 && (
-              <ul className="meta-list">
-                {booking.serviceLines.map((item) => (
-                  <li key={item.label}>
-                    {item.label}：{item.value}
-                  </li>
-                ))}
-              </ul>
-            )}
-            <button
-              type="button"
-              className="btn ghost"
-              onClick={async () => setCopyStatus(await copyMessage(booking.bookingMessage))}
-            >
-              复制添加说明
-            </button>
-            {copyStatus && <p className="meta" role="status">{copyStatus}</p>}
-            <p className="meta">二维码和添加说明只用于联系，不会自动发送你的答题、分数或自述。</p>
-          </>
-        ) : (
-          <p className="quiet-box">预约入口暂未开放。这里不会放置占位二维码。看结果和保存图片都不需要加微信。</p>
-        )}
-      </section>
-    ),
     export: (
       <section data-section="export" key="export">
         <div className="stack">
@@ -269,16 +232,6 @@ function retry(
       ...item,
       reportError: error instanceof Error ? error.message : "结果没有生成成功。",
     }));
-  }
-}
-
-async function copyMessage(message: string) {
-  try {
-    await navigator.clipboard.writeText(message);
-    return "预约消息已复制，只包含预约意向。";
-  } catch {
-    window.prompt("请手动复制这段预约消息", message);
-    return "已打开复制提示，请确认内容后手动复制。";
   }
 }
 

@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { ExportSheet } from "../components/ExportSheet";
+import { resolveBooking } from "../logic/booking";
 import { useSession } from "../session/context";
 import { sheetToPng } from "../lib/sheetImage";
+
+const CLOSED_BOOKING = resolveBooking(null);
 
 type Shot = { title: string; url: string };
 
 export function PreviewPage() {
-  const { session, patch, booking, retest } = useSession();
+  const { session, patch, retest } = useSession();
   const report = session.report;
   const [variant, setVariant] = useState<"private" | "share">("private");
-  const [includeQr, setIncludeQr] = useState(false);
   const [agreed, setAgreed] = useState(Boolean(session.consent.saveResult?.agreed));
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [shot, setShot] = useState<Shot | null>(null);
   const [armed, setArmed] = useState(false);
-  const wechat = /MicroMessenger/i.test(navigator.userAgent);
 
   if (!report) {
     return (
@@ -83,17 +84,6 @@ export function PreviewPage() {
           分享版本
         </button>
       </div>
-      {variant === "private" && (
-        <label className="check">
-          <input
-            type="checkbox"
-            checked={includeQr}
-            disabled={!booking.available}
-            onChange={(event) => setIncludeQr(event.target.checked)}
-          />
-          <span>{booking.available ? "在完整版本里加入预约二维码" : "预约二维码还没配置，图片里不会出现占位码"}</span>
-        </label>
-      )}
       <label className="check">
         <input type="checkbox" checked={agreed} onChange={(event) => setAgreed(event.target.checked)} />
         <span>我同意把这份结果生成图片，并保存到这台设备上。</span>
@@ -114,20 +104,16 @@ export function PreviewPage() {
         <figure className="shot">
           <figcaption>{shot.title}</figcaption>
           <img src={shot.url} alt={shot.title} />
-          {wechat ? (
-            <p>在微信里长按图片，就能保存到相册。</p>
-          ) : (
-            <a className="btn ghost" href={shot.url} download={`${shot.title}.png`}>
-              保存图片
-            </a>
-          )}
-          {!wechat && <p className="meta">如果浏览器拦住下载，也可以长按图片保存。</p>}
+          <a className="btn ghost" href={shot.url} download={`${shot.title}.png`}>
+            保存图片
+          </a>
+          <p className="meta">如果浏览器拦住下载，也可以长按图片保存。</p>
         </figure>
       )}
       {armed &&
         createPortal(
           <div className="export-stage" aria-hidden="true">
-            <ExportSheet report={report} variant={variant} part="full" booking={booking} includeQr={includeQr} nick={session.nick ?? ""} />
+            <ExportSheet report={report} variant={variant} part="full" booking={CLOSED_BOOKING} includeQr={false} nick={session.nick ?? ""} />
           </div>,
           document.body,
         )}
