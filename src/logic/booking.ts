@@ -6,9 +6,9 @@ const DEFAULTS: OpsConfig = {
   bookingOpen: false,
   qrImageUrl: "",
   receptionIdentity: "",
-  headline: "想和如一老师一起看懂这张心力地图？",
-  body: "分数可以提示方向，你的经历还需要放进真实生活里理解。扫码添加预约微信，发送「心力地图」，预约1v1深度解读。",
-  bookingMessage: "老师好，我想预约心力地图的1v1深度解读。",
+  headline: "",
+  body: "",
+  bookingMessage: "",
   service: { form: "", duration: "", price: "", hours: "", capacity: "" },
 };
 

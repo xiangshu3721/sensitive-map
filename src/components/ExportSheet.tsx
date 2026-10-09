@@ -8,8 +8,8 @@ export function ExportSheet({
   report,
   variant,
   part,
-  booking,
-  includeQr,
+  booking: _booking,
+  includeQr: _includeQr,
   nick = "",
 }: {
   report: Report;
@@ -19,10 +19,10 @@ export function ExportSheet({
   includeQr: boolean;
   nick?: string;
 }) {
+  void _booking;
+  void _includeQr;
   const showMap = part !== "rest";
   const showRest = part !== "map";
-  const showQr = variant === "private" && includeQr && booking.available;
-
   return (
     <article className="sheet" data-export-variant={variant} data-export-part={part}>
       {showMap && (
@@ -116,27 +116,6 @@ export function ExportSheet({
         <p className="sheet-boundary">记录的异常：{report.anomalies.join("；")}</p>
       )}
       {showRest && <p className="sheet-boundary">{report.boundary}</p>}
-      {showRest && showQr && (
-        <section>
-          <h2>预约如一老师</h2>
-          <p>{booking.headline}</p>
-          <p>{booking.body}</p>
-          <div className="sheet-qr">
-            <img src={booking.qrImageUrl} alt="预约二维码" />
-            <p>{booking.receptionIdentity}</p>
-            <p><strong>添加时请备注：心力地图</strong></p>
-          </div>
-          {booking.serviceLines.length > 0 && (
-            <ul>
-              {booking.serviceLines.map((item) => (
-                <li key={item.label}>
-                  {item.label}：{item.value}
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-      )}
       {showRest && (
         <footer className="sheet-foot">
           <span>题库 {report.questionBankVersion}</span>

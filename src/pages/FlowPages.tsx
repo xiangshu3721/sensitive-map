@@ -469,9 +469,9 @@ export function PrivacyPage() {
       </p>
       <p>「原生家庭」这一项只看你在题目中描述的感受和相处方式，不用来推断你的家庭经历。</p>
       <p>
-        你的答案、影响评分、情境选择和自述，都保存在这台设备上。查看结果和保存图片都不需要加微信，原始答案也不会自动发送。
+        你的答案、影响评分、情境选择和自述，都保存在这台设备上。查看结果和保存图片都不需要额外账号，原始答案也不会自动发送。
       </p>
-      <p>是否保存图片、是否添加如一老师微信，由你自己决定。添加微信时不会自动附上答题内容。</p>
+      <p>是否保存图片由你自己决定。结果只留在本机，不会自动外传。</p>
       <ul className="meta-list">
         <li>题库版本 {session.report?.questionBankVersion ?? QUESTION_BANK_VERSION}</li>
         <li>规则版本 {session.report?.ruleVersion ?? RULE_VERSION}</li>
