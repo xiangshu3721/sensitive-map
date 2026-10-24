@@ -236,6 +236,8 @@ p { margin: 0 0 12px; }
 }
 .help-note { color: #5c3928; }
 .stack { display: grid; gap: 10px; margin-top: 18px; }
+.share-note { margin: 0; }
+.share-note.warn { color: var(--accent); }
 .btn, .choice, .scale-btn, .na {
   border: 1px solid var(--line);
   background: #fff;

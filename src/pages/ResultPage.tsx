@@ -6,6 +6,7 @@ import { DimensionBlock } from "../components/DimensionBlock";
 import { RadarChart } from "../components/Radar";
 import { applyTopicOverride, buildReport, defaultExpandedDim, RESULT_SECTION_ORDER } from "../logic/report";
 import type { DimId, SubId } from "../model";
+import { ShareResult } from "../components/ShareResult";
 import { kit, saveReport, useHistoryCount } from "../lib/records";
 import { useSession } from "../session/context";
 
@@ -163,6 +164,7 @@ export function ResultPage() {
     export: (
       <section data-section="export" key="export">
         <div className="stack">
+          <ShareResult report={report} />
           <button
             type="button"
             className="btn"
@@ -176,7 +178,7 @@ export function ResultPage() {
           <button type="button" className="btn ghost" onClick={retest}>
             重新测试
           </button>
-          {saved === true && <p className="meta" role="status">这次结果已保存在这台设备（不上传），可在「历史记录」里再看。</p>}
+          {saved === true && <p className="meta" role="status">这次结果已保存在这台设备，可在「历史记录」里再看。</p>}
           {saved === false && (
             <p className="meta" role="status">这次结果没能存进浏览器（可能是无痕模式或空间已满），仍可导出图片保存。</p>
           )}
